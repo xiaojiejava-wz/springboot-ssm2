@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            text-align: center;
+            color: darkgreen;
+        }
+        span{
+            font-size: 14px;
+        }
+        table{
+            border-collapse: collapse;
+            width: 80%;
+        }
+        table,td,th{
+            border: 1px solid darkblue;
+        }
+    </style>
+    <link href="../css/bootstarap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<span>
+    修改页面
+</span>
+<form th:action="@{/emp/updateEmp}" th:object="${emp}" th:method="post" enctype="multipart/form-data">
+    <input th:type="hidden" name="eid" id="eid" th:value="${emp.eid}">
+<table >
+   <tr>
+       <td>姓名</td>
+       <td>
+           <input th:type="text" id="ename" name="ename" th:value="${emp.ename}">
+       </td>
+   </tr>
+    <tr>
+        <td>薪资</td>
+        <td>
+            <input th:type="number" id="salary" name="salary" th:value="${emp.salary}">
+        </td>
+    </tr>
+    <tr>
+        <td>职位</td>
+        <td>
+            <input th:type="text" id="job" name="job" th:value="${emp.job}">
+        </td>
+    </tr>
+    <tr>
+        <td>生日</td>
+        <td>
+            <input th:type="date" id="birthday" name="birthday" th:value="${#dates.format(emp.birthday,'yyyy-MM-dd')}">
+        </td>
+    </tr>
+    <tr>
+        <td>照片</td>
+        <td>
+            <input th:type="file" name="file" id="file">
+            <img th:src="@{${emp.photo}}" width="80" height="80">
+        </td>
+    </tr>
+    <tr>
+        <td>所在部门</td>
+        <td>
+            <select name="did">
+                <option>-请选择所在部门-</option>
+                <option th:each="dept:${depts}" th:text="${dept.dname}"
+                        th:value="${dept.did}" th:selected="${dept.did eq emp.did}"></option>
+            </select>
+        </td>
+    </tr>
+</table>
+    <input th:type="submit" value="修改">
+</form>
+</body>
+</html>
